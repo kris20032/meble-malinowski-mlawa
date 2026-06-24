@@ -126,6 +126,25 @@
   @media(max-width:560px){.ed-gallery{grid-template-columns:1fr}.ed-gallery .tile:nth-child(1),.ed-gallery .tile:nth-child(6){grid-column:span 1}}
   .callbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;align-items:center;justify-content:center;gap:.55rem;background:linear-gradient(135deg,var(--gold),var(--gold-d));color:#fff;font-weight:600;font-size:1.02rem;padding:15px;text-decoration:none;box-shadow:0 -10px 30px -12px rgba(0,0,0,.45)}
   @media(max-width:880px){ .callbar{display:flex} body{padding-bottom:62px} }
+/* === CINEMATIC HERO === */
+.hero-cine{position:relative;height:100svh;min-height:580px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-cine-bg{position:absolute;inset:0;background:url('img/hero.jpg') center/cover no-repeat;transform:scale(1.05);animation:cineZoom 16s var(--ease) forwards}
+.hero-cine::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(18,15,12,.55) 0%,rgba(18,15,12,.14) 16%,rgba(18,15,12,.30) 52%,rgba(18,15,12,.84) 100%)}
+.hero-cine-inner{position:relative;z-index:2;color:#fff;padding-bottom:clamp(56px,10vh,128px)}
+.hero-cine .eyebrow{color:#fff;opacity:.92}
+.hero-cine h1{color:#fff;font-size:clamp(2.8rem,8.5vw,7rem);line-height:.98;letter-spacing:-.03em;max-width:20ch;margin-bottom:30px;text-shadow:0 8px 50px rgba(0,0,0,.5)}
+.hero-cine h1 em{font-style:italic;color:var(--rose)}
+.hero-cine-scroll{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:3;color:#fff;opacity:.85;font-size:1.5rem;text-decoration:none;animation:cineBob 1.9s ease-in-out infinite}
+@keyframes cineZoom{to{transform:scale(1)}}
+@keyframes cineBob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+body.cine header{position:fixed;top:0;left:0;right:0;background:transparent;border-bottom-color:transparent;transition:background .3s,border-color .3s}
+body.cine header .logo,body.cine header .nav-links a{color:#fff;text-shadow:0 1px 14px rgba(0,0,0,.6)}
+body.cine header .logo span{color:#f0d9a8;text-shadow:0 1px 14px rgba(0,0,0,.6)}
+body.cine header.scrolled{background:rgba(250,245,239,.92);border-bottom:1px solid rgba(0,0,0,.06);backdrop-filter:blur(12px)}
+body.cine header.scrolled .logo,body.cine header.scrolled .nav-links a{color:var(--espresso);text-shadow:none}
+body.cine header.scrolled .logo span{color:var(--gold-d);text-shadow:none}
+body.cine header.scrolled .logo span{color:var(--gold-d)}
+@media (prefers-reduced-motion:reduce){.hero-cine-bg,.hero-cine-scroll{animation:none}}
 
 /* === base premium === */
 /* BASE PREMIUM — wspólny system dla wszystkich branż (z _premium-web-craft.md).
@@ -312,7 +331,7 @@ header{background:rgba(246,242,234,.86);border-bottom:1px solid rgba(140,131,119
 }
 </style>
 </head>
-<body>
+<body class="cine">
 <header><div class="wrap"><nav>
   <div class="logo">Wer Pol Piotr <span>Malinowski</span></div>
   <div class="nav-links" id="menu">
@@ -322,20 +341,14 @@ header{background:rgba(246,242,234,.86);border-bottom:1px solid rgba(140,131,119
   <button class="burger" id="burger" aria-label="Menu">☰</button>
 </nav></div></header>
 
-<section class="ed-hero" style="padding:0">
-  <div class="ed-hero-img" role="img" aria-label="Wer Pol Piotr Malinowski">
-    <div class="wrap ed-hero-cap reveal">
-      <span class="eyebrow">Stolarstwo i meble na wymiar · Mława</span>
-      <h1>Meble robione <em>pod Twoje wnętrze</em></h1>
-    </div>
+<section class="hero-cine">
+  <div class="hero-cine-bg" role="img" aria-label="Wer Pol Piotr Malinowski"></div>
+  <div class="hero-cine-inner wrap">
+    <span class="eyebrow">Stolarstwo i meble na wymiar · Mława</span>
+    <h1>Meble robione <em>pod Twoje wnętrze</em></h1>
+    <div class="hero-cta"><a class="btn btn-gold" href="#kontakt">Zobacz realizacje</a></div>
   </div>
-  <div class="wrap ed-hero-lead reveal">
-    <p>Projektujemy i wykonujemy meble dopasowane do każdego centymetra Twojego mieszkania. Od pomiaru, przez projekt, po montaż — wszystko w jednych rękach, z dbałością o drewno i każdy detal.</p>
-    <div class="hero-cta">
-      <a class="btn btn-gold" href="#kontakt">Zobacz realizacje</a>
-      <a class="btn btn-dark" href="tel:+48780593137">Zadzwoń: +48 780 593 137</a>
-    </div>
-  </div>
+  <a class="hero-cine-scroll" href="#oferta" aria-label="Przewiń niżej">↓</a>
 </section>
 
 <div class="strip"><div class="wrap">
@@ -422,5 +435,6 @@ header{background:rgba(246,242,234,.86);border-bottom:1px solid rgba(140,131,119
     setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(_rv)},2000); /* bezpiecznik: gwarancja widoczności */
   } else { _els.forEach(_rv); }
 </script>
+<script>(function(){var h=document.querySelector("header");function s(){if(h)h.classList.toggle("scrolled",scrollY>60)}s();addEventListener("scroll",s,{passive:true})})();</script>
 </body>
 </html>
